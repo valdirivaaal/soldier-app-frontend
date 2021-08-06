@@ -18,11 +18,49 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <style>
+        .number-detail {
+            font-size: 2.5rem;
+        }
+        .geo-text {
+            margin-bottom: 0 !important;
+            font-size: 0.95rem;
+        }
+        .geo-card-body {
+            min-height: 7.5rem !important;
+            padding: 1rem !important;
+        }
+        .dotted {
+            height: 1rem;
+            width: 1rem;
+            border-radius: 50%;
+            display: inline-flex;
+        }
+        .dotted.maroon {
+            background-color: #9c092b;
+        }
+        .dotted.green {
+            background-color: #149c2f;
+        }
+        .dotted.red {
+            background-color: #f0071e;
+        }
+        .dotted.yellow {
+            background-color: #ede907;
+        }
+        .dotted.blue {
+            background-color: #0e72c9;
+        }
+        .card-body.custom-min-height {
+            min-height: 16rem !important;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+            <div class="container-fluid">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
