@@ -6,9 +6,10 @@
         <!-- Soldiers list -->
         <div class="col-lg-2">
             <div class="bs-component">
-                <div class="card border-light mb-3">
+                <div class="card border-primary mb-3">
                     <div class="card-header">Personel Data</div>
-                    <ul class="list-group" style="min-height: 16rem;">
+                    <div id="soldier-list-none" class="card-body custom-min-height align-items-center d-flex justify-content-center"><i>No data available</i></div>
+                    <ul id="soldier-list" class="list-group d-none" style="min-height: 16rem;">
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             Soldier A
                             <span class="badge bg-primary rounded-pill">Tim A</span>
@@ -31,7 +32,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="card border-light">
+                <div class="card border-primary">
                     <div class="card-header">Chart Filter</div>
                     <div class="card-body custom-min-height">
                         <p class="card-text"><span class="dotted maroon"></span> Pulse</p>
@@ -46,13 +47,13 @@
         <!-- Maps -->
         <div class="col-lg-6">
             <div class="bs-component">
-                <div class="card border-light mb-3">
+                <div class="card border-primary mb-3">
                     <div class="card-header align-items-baseline d-flex justify-content-center">Soldier Position</div>
                     <div class="card-body custom-min-height">
                         <!-- <img src="https://via.placeholder.com/180" alt="" class="card-img-bottom" style="width: 100%; height:250px;"> -->
                     </div>
                 </div>
-                <div class="card border-light">
+                <div class="card border-primary">
                     <div class="card-header align-items-baseline d-flex justify-content-center">Information Chart</div>
                     <div class="card-body custom-min-height"></div>
                 </div>
@@ -61,50 +62,51 @@
         <!-- Soldier details -->
         <div class="col-lg-4">
             <div class="bs-component">
-                <div class="card border-light">
-                    <div class="card-header">Soldier A (Tim A)</div>
-                    <div class="card-body" style="padding: 1rem 1.25rem 0 1.25rem !important; min-height: 36.25rem !important;">
-                        <div class="row">
+                <div class="card border-primary">
+                    <div class="card-header sd-name">None</div>
+                    <div class="card-body align-items-center d-flex justify-content-center" style="padding: 1rem 1.25rem 0 1.25rem !important; min-height: 36.25rem !important;">
+                        <div id="soldier-detail-none" class=""><i>No data available</i></div>
+                        <div id="soldier-detail" class="row d-none">
                             <div class="col-lg-6">
-                                <div class="card border-light mb-3">
+                                <div class="card border-primary mb-3">
                                     <div class="card-header align-items-baseline d-flex justify-content-center">Pulse</div>
                                     <div class="card-body geo-card-body align-items-baseline d-flex justify-content-center">
-                                        <span class="number-detail">78/</span>Bpm
+                                        <span class="number-detail sd-pulse">0/</span>Bpm
                                     </div>
                                 </div>
-                                <div class="card border-light mb-3">
+                                <div class="card border-primary mb-3">
                                     <div class="card-header align-items-baseline d-flex justify-content-center">Blood Pressure</div>
                                     <div class="card-body geo-card-body align-items-baseline d-flex justify-content-center">
-                                        <span class="number-detail">120/80</span>Bpm
+                                        <span class="number-detail sd-bp">0/0</span>Bpm
                                     </div>
                                 </div>
-                                <div class="card border-light">
+                                <div class="card border-primary">
                                     <div class="card-header align-items-baseline d-flex justify-content-center">Body Temp</div>
                                     <div class="card-body geo-card-body align-items-baseline d-flex justify-content-center">
-                                        <span class="number-detail">78/</span>&#8451;
+                                        <span class="number-detail sd-bt">0/</span>&#8451;
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <div class="card border-light mb-3">
+                                <div class="card border-primary mb-3">
                                     <div class="card-header align-items-baseline d-flex justify-content-center">Oxygen Level</div>
                                     <div class="card-body geo-card-body align-items-baseline d-flex justify-content-center">
-                                        <span class="number-detail">98/</span>%
+                                        <span class="number-detail sd-ol">0/</span>%
                                     </div>
                                 </div>
-                                <div class="card border-light mb-3">
+                                <div class="card border-primary mb-3">
                                     <div class="card-header align-items-baseline d-flex justify-content-center">Respiration</div>
                                     <div class="card-body geo-card-body align-items-baseline d-flex justify-content-center">
-                                        <span class="number-detail">16/</span>min
+                                        <span class="number-detail sd-resp">0/</span>min
                                     </div>
                                 </div>
-                                <div class="card border-light">
+                                <div class="card border-primary">
                                     <div class="card-header align-items-baseline d-flex justify-content-center">Geo Detail</div>
                                     <div class="card-body geo-card-body">
-                                        <p class="card-text geo-text">17.00 WIB</p>
-                                        <p class="card-text geo-text">Lat : H 34'114'24.00"</p>
-                                        <p class="card-text geo-text">Lon : E 112'13'24.00"</p>
-                                        <p class="card-text geo-text">Alt : 3000 M</p>
+                                        <!-- <p class="card-text geo-text">17.00 WIB</p> -->
+                                        <p class="card-text geo-text sd-lat">Lat : 0"</p>
+                                        <p class="card-text geo-text sd-lon">Lon : 0"</p>
+                                        <!-- <p class="card-text geo-text">Alt : 3000 M</p> -->
                                     </div>
                                 </div>
                             </div>
@@ -115,4 +117,126 @@
         </div>
     </div>
 </div>
+@endsection
+@section('scripts')
+    <script>
+        var DASHBOARD = {};
+        var deviceId = null;
+
+        DASHBOARD = {
+            init: () => {
+                DASHBOARD.getSoldierData();
+                DASHBOARD.soldierDetail(deviceId);
+
+                setTimeout(() => {
+                    DASHBOARD.init();
+                }, 5000);
+            },
+            getSoldierData: () => {
+                // alert("Valdi ganteng bgt sih");
+                $.ajax({
+                    url: "/dashboard/soldier",
+                    type: 'GET',
+                    success: (response) => {
+                        console.log(response);
+
+                        if (response.success) {
+                            let row = '';
+                            $.each(response.data, (key, val) => {
+                                row += "\
+                                    <li class='soldier-list-data list-group-item d-flex justify-content-between align-items-center' id="+ val.id_device +">\
+                                        "+ val.nama_soldier +"\
+                                        <span class='badge bg-primary rounded-pill'>" + val.nama_team + "</span>\
+                                    </li>\
+                                ";
+                            });
+
+                            /**
+                             * Attach to ul element
+                             */
+                            $("#soldier-list").html(row);
+
+                            /**
+                             * Toggle hide and show element
+                             */
+                            $("#soldier-list").removeClass("d-none")
+                            $("#soldier-list-none").removeClass("d-flex")
+                            $("#soldier-list-none").addClass("d-none")
+
+                            /**
+                             * On click event on soldier lists
+                             */
+                            $(".soldier-list-data").on("click", function(e) {
+                                e.preventDefault();
+                                let deviceId = $(this).closest('li').attr('id');
+
+                                /**
+                                 * Showing detail of soldier
+                                 */
+                                DASHBOARD.soldierDetail(deviceId);
+                            });
+
+                        } else {
+                            /**
+                             * Toggle hide and show element
+                             */
+                            $("#soldier-list").addClass("d-none")
+                            $("#soldier-list-none").addClass("d-flex")
+                            $("#soldier-list-none").removeClass("d-none")
+                        }
+                    },
+                    error: (a, b, c) => {
+                        console.log(a + b + c);
+                    }
+                });
+            },
+            soldierDetail: (id) => {
+                if (id === undefined || id === null) return false;
+
+                deviceId = id;
+                $.ajax({
+                    url: '/dashboard/soldier/detail/' + id,
+                    type: 'GET',
+                    success: (response) => {
+                        console.log('Soldier detail', response)
+
+                        if (response.success) {
+                            /**
+                             * Set every single element with response data
+                             */
+                            $(".sd-name").text(response.data[0].nama_soldier);
+                            $(".sd-pulse").text(response.data[0].pulse + '/');
+                            $(".sd-ol").text(response.data[0].oxygen + '/');
+                            $(".sd-bp").text(response.data[0].bloodPressure);
+                            $(".sd-resp").text(response.data[0].respiration + '/');
+                            $(".sd-bt").text(response.data[0].temperature + '/');
+                            $(".sd-lat").text('Lat : ' + response.data[0].latitude);
+                            $(".sd-lon").text('Lon : ' + response.data[0].longitude);
+
+                            /**
+                             * Toggle hide and show element
+                             */
+                            $("#soldier-detail").removeClass("d-none")
+                            $("#soldier-detail-none").addClass("d-none")
+                        } else {
+                            /**
+                             * Toggle hide and show element
+                             */
+                            $("#soldier-detail").addClass("d-none")
+                            $("#soldier-detail-none").removeClass("d-none")
+                        }
+                    }
+                })
+            }
+        }
+
+        $(document).ready(function() {
+            /**
+             * Initialize dashboard functions
+             */
+            DASHBOARD.init();
+
+            // $("#soldier-list").on("click", DASHBOARD.soldierClick(this));
+        });
+    </script>
 @endsection
