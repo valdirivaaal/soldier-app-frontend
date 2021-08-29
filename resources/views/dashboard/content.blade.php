@@ -3,110 +3,113 @@
 @section('content')
 <div class="container-fluid">
     <div class="row">
-        <!-- Soldiers list -->
-        <div class="col-lg-2">
-            <div class="bs-component">
-                <div class="card border-primary mb-3">
-                    <div class="card-header">Personel Data</div>
-                    <div id="soldier-list-none" class="card-body custom-min-height align-items-center d-flex justify-content-center"><i>No data available</i></div>
-                    <ul id="soldier-list" class="list-group d-none" style="min-height: 16rem;">
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Soldier A
-                            <span class="badge bg-primary rounded-pill">Tim A</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Soldier B
-                            <span class="badge bg-primary rounded-pill">Tim A</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Soldier C
-                            <span class="badge bg-primary rounded-pill">Tim B</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Soldier D
-                            <span class="badge bg-primary rounded-pill">Tim B</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Soldier E
-                            <span class="badge bg-primary rounded-pill">Tim B</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="card border-primary">
-                    <div class="card-header">Chart Filter</div>
-                    <div class="card-body custom-min-height">
-                        <p class="card-text"><span class="dotted maroon"></span> Pulse</p>
-                        <p class="card-text"><span class="dotted green"></span> Oxygen Level</p>
-                        <p class="card-text"><span class="dotted red"></span> Blood Pressure</p>
-                        <p class="card-text"><span class="dotted yellow"></span> Respiration</p>
-                        <p class="card-text"><span class="dotted blue"></span> Body Temp</p>
+        <div class="col-lg-8">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="bs-component">
+                        <div class="card border-primary mb-3">
+                            <div class="card-header">Personnel Data</div>
+                            <div id="soldier-list-none" class="card-body custom-min-height align-items-center d-flex justify-content-center"><i>No data available</i></div>
+                            <ul id="soldier-list" class="list-group list-group-flush list-group-scroll d-none" style="min-height: 16rem;">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Soldier A
+                                    <span class="badge bg-primary rounded-pill">Tim A</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Soldier B
+                                    <span class="badge bg-primary rounded-pill">Tim A</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Soldier C
+                                    <span class="badge bg-primary rounded-pill">Tim B</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Soldier D
+                                    <span class="badge bg-primary rounded-pill">Tim B</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Soldier E
+                                    <span class="badge bg-primary rounded-pill">Tim B</span>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <!-- Maps -->
-        <div class="col-lg-6">
-            <div class="bs-component">
-                <div class="card border-primary mb-3">
-                    <div class="card-header align-items-baseline d-flex justify-content-center">Soldier Position</div>
-                    <div class="card-body custom-min-height">
-                        <!-- <img src="https://via.placeholder.com/180" alt="" class="card-img-bottom" style="width: 100%; height:250px;"> -->
-                    </div>
-                </div>
-                <div class="card border-primary">
-                    <div class="card-header align-items-baseline d-flex justify-content-center">Information Chart</div>
-                    <div class="card-body custom-min-height"></div>
-                </div>
-            </div>
-        </div>
-        <!-- Soldier details -->
-        <div class="col-lg-4">
-            <div class="bs-component">
-                <div class="card border-primary">
-                    <div class="card-header sd-name">None</div>
-                    <div class="card-body align-items-center d-flex justify-content-center" style="padding: 1rem 1.25rem 0 1.25rem !important; min-height: 36.25rem !important;">
-                        <div id="soldier-detail-none" class=""><i>No data available</i></div>
-                        <div id="soldier-detail" class="row d-none">
-                            <div class="col-lg-6">
-                                <div class="card border-primary mb-3">
-                                    <div class="card-header align-items-baseline d-flex justify-content-center">Pulse</div>
-                                    <div class="card-body geo-card-body align-items-baseline d-flex justify-content-center">
-                                        <span class="number-detail sd-pulse">0/</span>Bpm
-                                    </div>
-                                </div>
-                                <div class="card border-primary mb-3">
-                                    <div class="card-header align-items-baseline d-flex justify-content-center">Blood Pressure</div>
-                                    <div class="card-body geo-card-body align-items-baseline d-flex justify-content-center">
-                                        <span class="number-detail sd-bp">0/0</span>Bpm
-                                    </div>
-                                </div>
-                                <div class="card border-primary">
-                                    <div class="card-header align-items-baseline d-flex justify-content-center">Body Temp</div>
-                                    <div class="card-body geo-card-body align-items-baseline d-flex justify-content-center">
-                                        <span class="number-detail sd-bt">0/</span>&#8451;
-                                    </div>
-                                </div>
+                <div class="col-lg-8">
+                    <div class="bs-component">
+                        <div class="card border-primary mb-3 mh-25">
+                            <div class="card-header align-items-baseline d-flex justify-content-center">Soldier Position</div>
+                            <div class="card-body custom-min-height">
+                                <!-- <img src="https://via.placeholder.com/180" alt="" class="card-img-bottom" style="width: 100%; height:250px;"> -->
                             </div>
-                            <div class="col-lg-6">
-                                <div class="card border-primary mb-3">
-                                    <div class="card-header align-items-baseline d-flex justify-content-center">Oxygen Level</div>
-                                    <div class="card-body geo-card-body align-items-baseline d-flex justify-content-center">
-                                        <span class="number-detail sd-ol">0/</span>%
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="bs-component">
+                        <div class="card border-primary w-100 mh-25">
+                            <div class="card-header align-items-baseline d-flex justify-content-center">Information Chart</div>
+                            <div class="card-body custom-min-height">
+                                <div id="soldier-chart"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="bs-component">
+                        <div class="card border-primary mh-50">
+                            <div class="card-header sd-name">None</div>
+                            <div class="card-body align-items-center d-flex justify-content-center" style="padding: 1rem 1.25rem 0 1.25rem !important; min-height: 36.25rem !important;">
+                                <div id="soldier-detail-none" class=""><i>No data available</i></div>
+                                <div id="soldier-detail" class="row d-none">
+                                    <div class="col-lg-6">
+                                        <div class="card border-primary mb-5">
+                                            <div class="card-header align-items-baseline d-flex justify-content-center">Pulse</div>
+                                            <div class="card-body geo-card-body align-items-baseline d-flex justify-content-center">
+                                                <span class="number-detail sd-pulse">0/</span>Bpm
+                                            </div>
+                                        </div>
+                                        <div class="card border-primary mb-5">
+                                            <div class="card-header align-items-baseline d-flex justify-content-center">Blood Pressure</div>
+                                            <div class="card-body geo-card-body align-items-baseline d-flex justify-content-center">
+                                                <span class="number-detail sd-bp">0/0</span>Bpm
+                                            </div>
+                                        </div>
+                                        <div class="card border-primary">
+                                            <div class="card-header align-items-baseline d-flex justify-content-center">Body Temp</div>
+                                            <div class="card-body geo-card-body align-items-baseline d-flex justify-content-center">
+                                                <span class="number-detail sd-bt">0/</span>&#8451;
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="card border-primary mb-3">
-                                    <div class="card-header align-items-baseline d-flex justify-content-center">Respiration</div>
-                                    <div class="card-body geo-card-body align-items-baseline d-flex justify-content-center">
-                                        <span class="number-detail sd-resp">0/</span>min
-                                    </div>
-                                </div>
-                                <div class="card border-primary">
-                                    <div class="card-header align-items-baseline d-flex justify-content-center">Geo Detail</div>
-                                    <div class="card-body geo-card-body">
-                                        <!-- <p class="card-text geo-text">17.00 WIB</p> -->
-                                        <p class="card-text geo-text sd-lat">Lat : 0"</p>
-                                        <p class="card-text geo-text sd-lon">Lon : 0"</p>
-                                        <!-- <p class="card-text geo-text">Alt : 3000 M</p> -->
+                                    <div class="col-lg-6">
+                                        <div class="card border-primary mb-5">
+                                            <div class="card-header align-items-baseline d-flex justify-content-center">Oxygen Level</div>
+                                            <div class="card-body geo-card-body align-items-baseline d-flex justify-content-center">
+                                                <span class="number-detail sd-ol">0/</span>%
+                                            </div>
+                                        </div>
+                                        <div class="card border-primary mb-5">
+                                            <div class="card-header align-items-baseline d-flex justify-content-center">Respiration</div>
+                                            <div class="card-body geo-card-body align-items-baseline d-flex justify-content-center">
+                                                <span class="number-detail sd-resp">0/</span>min
+                                            </div>
+                                        </div>
+                                        <div class="card border-primary">
+                                            <div class="card-header align-items-baseline d-flex justify-content-center">Geo Detail</div>
+                                            <div class="card-body geo-card-body">
+                                                <!-- <p class="card-text geo-text">17.00 WIB</p> -->
+                                                <p class="card-text geo-text sd-lat">Lat : 0"</p>
+                                                <p class="card-text geo-text sd-lon">Lon : 0"</p>
+                                                <!-- <p class="card-text geo-text">Alt : 3000 M</p> -->
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -116,9 +119,24 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <!-- Soldiers list -->
+        <div class="col-lg-2">
+
+        </div>
+        <!-- Maps -->
+        <div class="col-lg-6">
+
+        </div>
+        <!-- Soldier details -->
+        <div class="col-lg-4">
+
+        </div>
+    </div>
 </div>
 @endsection
 @section('scripts')
+    <script src="{{ asset('js/highcharts.js') }}"></script>
     <script>
         var DASHBOARD = {};
         var deviceId = null;
@@ -127,6 +145,7 @@
             init: () => {
                 DASHBOARD.getSoldierData();
                 DASHBOARD.soldierDetail(deviceId);
+                DASHBOARD.soldierChart();
 
                 setTimeout(() => {
                     DASHBOARD.init();
@@ -227,6 +246,58 @@
                         }
                     }
                 })
+            },
+            soldierChart: () => {
+                Highcharts.chart('soldier-chart', {
+                    chart: {
+                        backgroundColor: 'none',
+                        // height: (9 / 16 * 100) + '%' // 16:9 ratio
+                    },
+                    title: {
+                        text: '',
+                        style: {
+                            color: '#fff',
+                        }
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Value',
+                            style: {
+                                color: '#fff',
+                            }
+                        },
+                        labels: {
+                            style: {
+                                color: '#fff',
+                            }
+                        }
+                    },
+                    xAxis: {
+
+                    },
+                    series: [{
+                        name: 'Pulse',
+                        data: [200, 79, 289, 123, 35]
+                    }, {
+                        name: 'Oxygen',
+                        data: [123, 179, 89, 53, 235]
+                    }, {
+                        name: 'Blood Pressure',
+                        data: [120, 99, 119, 63, 65]
+                    }, {
+                        name: 'Respiration',
+                        data: [90, 89, 179, 93, 55]
+                    }, {
+                        name: 'Body Temp',
+                        data: [100, 89, 129, 73, 88]
+                    }],
+                    legend: {
+                        itemStyle: {
+                            color: '#fff',
+                            fontWeight: 'bold'
+                        }
+                    }
+                });
             }
         }
 
@@ -235,8 +306,6 @@
              * Initialize dashboard functions
              */
             DASHBOARD.init();
-
-            // $("#soldier-list").on("click", DASHBOARD.soldierClick(this));
         });
     </script>
 @endsection
