@@ -59,6 +59,35 @@
             background-color: #142341 !important;
         }
 
+        #soldier-chart {
+            height: 78%;
+            width: 90%;
+            position: absolute;
+        }
+
+        .res-height-1 {
+            height: calc((100vh - 31px - 24px - 24px - 24px)/3);
+        }
+        .res-height-2{
+            height: calc(((100vh - 31px - 24px - 24px - 24px)/3) + ((100vh - 31px - 24px - 24px - 24px)/3));
+        }
+
+        .list-group-scroll {
+            overflow-y: auto;
+            max-height: 25rem !important;
+            min-height: 21.7rem !important;
+        }
+
+        .mh-25 {
+            min-height: 25rem !important;
+            max-height: 25rem !important;
+        }
+
+        .mh-50 {
+            min-height: 51rem !important;
+            max-height: 51rem !important;
+        }
+
     </style>
 </head>
 <body>
