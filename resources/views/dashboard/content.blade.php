@@ -145,11 +145,11 @@
             init: () => {
                 DASHBOARD.getSoldierData();
                 DASHBOARD.soldierDetail(deviceId);
-                DASHBOARD.soldierChart();
+                DASHBOARD.soldierChart(deviceId);
 
                 setTimeout(() => {
                     DASHBOARD.init();
-                }, 5000);
+                }, 30000);
             },
             getSoldierData: () => {
                 // alert("Valdi ganteng bgt sih");
@@ -157,8 +157,6 @@
                     url: "/dashboard/soldier",
                     type: 'GET',
                     success: (response) => {
-                        console.log(response);
-
                         if (response.success) {
                             let row = '';
                             $.each(response.data, (key, val) => {
@@ -193,6 +191,10 @@
                                  * Showing detail of soldier
                                  */
                                 DASHBOARD.soldierDetail(deviceId);
+                                /**
+                                 * Showing chart data
+                                 */
+                                DASHBOARD.soldierChart(deviceId);
                             });
 
                         } else {
@@ -217,8 +219,6 @@
                     url: '/dashboard/soldier/detail/' + id,
                     type: 'GET',
                     success: (response) => {
-                        console.log('Soldier detail', response)
-
                         if (response.success) {
                             /**
                              * Set every single element with response data
@@ -247,57 +247,220 @@
                     }
                 })
             },
-            soldierChart: () => {
-                Highcharts.chart('soldier-chart', {
-                    chart: {
-                        backgroundColor: 'none',
-                        // height: (9 / 16 * 100) + '%' // 16:9 ratio
-                    },
-                    title: {
-                        text: '',
-                        style: {
-                            color: '#fff',
-                        }
-                    },
-                    yAxis: {
-                        title: {
-                            text: 'Value',
-                            style: {
-                                color: '#fff',
-                            }
-                        },
-                        labels: {
-                            style: {
-                                color: '#fff',
-                            }
-                        }
-                    },
-                    xAxis: {
+            soldierChart: (id) => {
+                if (id === undefined || id === null) return false;
+                /**
+                 * Initiate device id
+                 */
+                deviceId = id;
 
-                    },
-                    series: [{
-                        name: 'Pulse',
-                        data: [200, 79, 289, 123, 35]
-                    }, {
-                        name: 'Oxygen',
-                        data: [123, 179, 89, 53, 235]
-                    }, {
-                        name: 'Blood Pressure',
-                        data: [120, 99, 119, 63, 65]
-                    }, {
-                        name: 'Respiration',
-                        data: [90, 89, 179, 93, 55]
-                    }, {
-                        name: 'Body Temp',
-                        data: [100, 89, 129, 73, 88]
-                    }],
-                    legend: {
-                        itemStyle: {
-                            color: '#fff',
-                            fontWeight: 'bold'
+                /**
+                 * Get chart data
+                 */
+                $.ajax({
+                    url: '/dashboard/soldier/chart/' + id,
+                    type: 'GET',
+                    success: (response) => {
+                        if (response.success) {
+                            /**
+                             * Declare seriesData variable
+                             */
+                            let pulseData = [];
+                            let oxygenData = [];
+                            let bloodData = [];
+                            let respirationData = [];
+                            let temperatureData = [];
+
+                            if (!_.isEmpty(response.data)) {
+                                _.each(response.data, function(value){
+                                    let timeData = new Date(value.y);
+
+                                    pulseData.push([
+                                        Date.UTC(
+                                            timeData.getUTCFullYear(),
+                                            timeData.getUTCMonth(),
+                                            timeData.getUTCDate(),
+                                            timeData.getUTCHours(),
+                                            timeData.getUTCMinutes(),
+                                            timeData.getUTCSeconds()
+                                        ),
+                                        parseInt(value.pulse)
+                                    ]);
+                                    oxygenData.push([
+                                        Date.UTC(
+                                            timeData.getUTCFullYear(),
+                                            timeData.getUTCMonth(),
+                                            timeData.getUTCDate(),
+                                            timeData.getUTCHours(),
+                                            timeData.getUTCMinutes(),
+                                            timeData.getUTCSeconds()
+                                        ),
+                                        parseInt(value.oxygen)
+                                    ]);
+                                    bloodData.push([
+                                        Date.UTC(
+                                            timeData.getUTCFullYear(),
+                                            timeData.getUTCMonth(),
+                                            timeData.getUTCDate(),
+                                            timeData.getUTCHours(),
+                                            timeData.getUTCMinutes(),
+                                            timeData.getUTCSeconds()
+                                        ),
+                                        parseInt(value.bloodPressure)
+                                    ]);
+                                    respirationData.push([
+                                        Date.UTC(
+                                            timeData.getUTCFullYear(),
+                                            timeData.getUTCMonth(),
+                                            timeData.getUTCDate(),
+                                            timeData.getUTCHours(),
+                                            timeData.getUTCMinutes(),
+                                            timeData.getUTCSeconds()
+                                        ),
+                                        parseInt(value.respiration)
+                                    ]);
+                                    temperatureData.push([
+                                        Date.UTC(
+                                            timeData.getUTCFullYear(),
+                                            timeData.getUTCMonth(),
+                                            timeData.getUTCDate(),
+                                            timeData.getUTCHours(),
+                                            timeData.getUTCMinutes(),
+                                            timeData.getUTCSeconds()
+                                        ),
+                                        parseInt(value.temperature)
+                                    ]);
+                                });
+                            }
+
+                            /**
+                             * Set chart value
+                             */
+                            let chart = new Highcharts.chart('soldier-chart', {
+                                chart: {
+                                    backgroundColor: 'none',
+                                },
+                                title: {
+                                    text: '',
+                                    style: {
+                                        color: '#fff',
+                                    }
+                                },
+                                yAxis: {
+		  	                        gridLineColor: '#666666',
+                                    title: {
+                                        text: 'Value',
+                                        style: {
+                                            color: '#fff',
+                                        }
+                                    },
+                                    labels: {
+                                        formatter: function () {
+                                            return this.value
+                                        },
+                                        style: {
+                                            color: '#fff',
+                                        }
+                                    }
+                                },
+                                xAxis: {
+                                    type: 'datetime',
+                                    labels: {
+                                        format: '{value:%H:%M}'
+                                    }
+                                },
+                                tooltip: {
+                                    pointFormat: '{series.name} : <b>{point.y:,.0f}</b>',
+                                },
+                                plotOptions: {
+                                    area: {
+                                    lineWidth: 100,
+                                    marker: {
+                                        enabled: true,
+                                        symbol: 'circle',
+                                        radius: 2,
+                                        states: {
+                                        hover: {
+                                            enabled: true
+                                        }
+                                        }
+                                    }
+                                    }
+                                },
+                                legend: {
+                                    itemStyle: {
+                                        color: '#fff',
+                                        fontWeight: 'bold'
+                                    }
+                                },
+                                series: []
+                            });
+
+                            /**
+                             * Initiate series data
+                             */
+                            let seriesPulse = {
+                                id: 'pulse',
+                                name: 'Pulse',
+                                lineWidth: 2,
+                                shadow: false,
+                                marker: {
+                                    radius: 0
+                                },
+                                data: pulseData
+                            }
+                            chart.addSeries(seriesPulse);
+
+                            let seriesOxygen = {
+                                id: 'oxygen',
+                                name: 'Oxygen',
+                                lineWidth: 2,
+                                shadow: false,
+                                marker: {
+                                    radius: 0
+                                },
+                                data: oxygenData
+                            }
+                            chart.addSeries(seriesOxygen)
+
+                            let seriesBlood = {
+                                id: 'blood',
+                                name: 'Blood Pressure',
+                                lineWidth: 2,
+                                shadow: false,
+                                marker: {
+                                    radius: 0
+                                },
+                                data: bloodData
+                            }
+                            chart.addSeries(seriesBlood)
+
+                            let seriesRespiration = {
+                                id: 'respiration',
+                                name: 'Respiration',
+                                lineWidth: 2,
+                                shadow: false,
+                                marker: {
+                                    radius: 0
+                                },
+                                data: respirationData
+                            }
+                            chart.addSeries(seriesRespiration)
+
+                            let seriesTemperature = {
+                                id: 'temperature',
+                                name: 'Temperature',
+                                lineWidth: 2,
+                                shadow: false,
+                                marker: {
+                                    radius: 0
+                                },
+                                data: temperatureData
+                            }
+                            chart.addSeries(seriesTemperature)
                         }
                     }
-                });
+                })
             }
         }
 

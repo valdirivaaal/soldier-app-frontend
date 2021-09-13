@@ -41,4 +41,16 @@ class DashboardController extends BaseController
 
         return response()->json($data, 200);
     }
+
+    /**
+     * Endpoint for getting Soldier detail chart
+     *
+     * @return JsonResponse
+     */
+    public function getSoldierChart($id)
+    {
+        $data = $this->fetchFromAPI('/dashboard/chart/'.$id);
+
+        return response()->json($data, 200);
+    }
 }
