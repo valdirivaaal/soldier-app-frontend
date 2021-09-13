@@ -402,7 +402,8 @@
                             let seriesPulse = {
                                 id: 'pulse',
                                 name: 'Pulse',
-                                lineWidth: 2,
+                                color: '#95ff02',
+                                lineWidth: 4,
                                 shadow: false,
                                 marker: {
                                     radius: 0
@@ -414,7 +415,8 @@
                             let seriesOxygen = {
                                 id: 'oxygen',
                                 name: 'Oxygen',
-                                lineWidth: 2,
+                                color: '#ff0202',
+                                lineWidth: 4,
                                 shadow: false,
                                 marker: {
                                     radius: 0
@@ -426,7 +428,8 @@
                             let seriesBlood = {
                                 id: 'blood',
                                 name: 'Blood Pressure',
-                                lineWidth: 2,
+                                color: '#ff8e24',
+                                lineWidth: 4,
                                 shadow: false,
                                 marker: {
                                     radius: 0
@@ -438,7 +441,8 @@
                             let seriesRespiration = {
                                 id: 'respiration',
                                 name: 'Respiration',
-                                lineWidth: 2,
+                                color: '#03fffb',
+                                lineWidth: 4,
                                 shadow: false,
                                 marker: {
                                     radius: 0
@@ -450,7 +454,8 @@
                             let seriesTemperature = {
                                 id: 'temperature',
                                 name: 'Temperature',
-                                lineWidth: 2,
+                                color: '#b300ff',
+                                lineWidth: 4,
                                 shadow: false,
                                 marker: {
                                     radius: 0
