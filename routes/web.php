@@ -24,4 +24,5 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
     Route::get('/dashboard/soldier', 'DashboardController@getDataSoldier');
     Route::get('/dashboard/soldier/detail/{id}', 'DashboardController@getSoldierDetail');
+    Route::get('/dashboard/soldier/chart/{id}', 'DashboardController@getSoldierChart');
 });
