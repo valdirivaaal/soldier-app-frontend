@@ -21,10 +21,27 @@ class BaseController extends Controller
      */
     public function fetchFromAPI($endpoint)
     {
-        $apiCall = file_get_contents($this->apiUrl . $endpoint);
+        try {
+            $uri = $this->apiUrl . $endpoint;
 
-        $result = $apiCall ? $apiCall : null;
+            $client = new \GuzzleHttp\Client();
 
-        return json_decode($result, true);
+            $res = $client->request('GET', $uri);
+
+            $response = json_decode($res->getBody());
+
+        } catch (\GuzzleHttp\Exception\ServerException $g) {
+            $response = [
+                'status' => false,
+                'message' => json_decode($g->getResponse()->getBody()->getContents())
+            ];
+        } catch (\Exception $e) {
+            $response = [
+                'status' => false,
+                'message' => $e->getMessage()
+            ];
+        }
+
+        return $response;
     }
 }
