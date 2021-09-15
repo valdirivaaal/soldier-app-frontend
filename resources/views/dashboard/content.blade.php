@@ -39,6 +39,7 @@
                     <div class="bs-component">
                         <div class="card border-primary mb-3 mh-25">
                             <div class="card-header align-items-baseline d-flex justify-content-center">Soldier Position</div>
+                            <div id="soldier-map-none" class="card-body custom-min-height align-items-center d-flex justify-content-center"><i>No data available</i></div>
                             <div class="card-body custom-min-height">
                                 <!-- <img src="https://via.placeholder.com/180" alt="" class="card-img-bottom" style="width: 100%; height:250px;"> -->
                             </div>
@@ -51,8 +52,9 @@
                     <div class="bs-component">
                         <div class="card border-primary w-100 mh-25">
                             <div class="card-header align-items-baseline d-flex justify-content-center">Information Chart</div>
-                            <div class="card-body custom-min-height">
-                                <div id="soldier-chart"></div>
+                            <div id="soldier-chart-none" class="card-body custom-min-height align-items-center d-flex justify-content-center"><i>No chart available</i></div>
+                            <div class="card-body custom-min-height d-flex">
+                                <div id="soldier-chart" class="d-none"></div>
                             </div>
                         </div>
                     </div>
@@ -137,6 +139,7 @@
 @endsection
 @section('scripts')
     <script src="{{ asset('js/highcharts.js') }}"></script>
+    <script src=""></script>
     <script>
         var DASHBOARD = {};
         var deviceId = null;
@@ -204,10 +207,31 @@
                             $("#soldier-list").addClass("d-none")
                             $("#soldier-list-none").addClass("d-flex")
                             $("#soldier-list-none").removeClass("d-none")
+
+                            /**
+                             * Show error message
+                             */
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'No data available !',
+                                icon: 'error',
+                                confirmButtonText: 'Ok'
+                            });
                         }
                     },
-                    error: (a, b, c) => {
-                        console.log(a + b + c);
+                    error: (jqXHR, textStatus, errorThrown) => {
+                        // Log the error to the console
+                        console.error(
+                            "The following error occurred: "+
+                            textStatus, errorThrown
+                        );
+
+                        Swal.fire({
+                            title: 'Error!',
+                            text: textStatus + ' - ' + errorThrown,
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                        });
                     }
                 });
             },
@@ -243,7 +267,31 @@
                              */
                             $("#soldier-detail").addClass("d-none")
                             $("#soldier-detail-none").removeClass("d-none")
+
+                            /**
+                             * Show error message
+                             */
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'Soldier detail not available !',
+                                icon: 'error',
+                                confirmButtonText: 'Ok'
+                            });
                         }
+                    },
+                    error: (jqXHR, textStatus, errorThrown) => {
+                        // Log the error to the console
+                        console.error(
+                            "The following error occurred: "+
+                            textStatus, errorThrown
+                        );
+
+                        Swal.fire({
+                            title: 'Error!',
+                            text: textStatus + ' - ' + errorThrown,
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                        });
                     }
                 })
             },
@@ -463,7 +511,35 @@
                                 data: temperatureData
                             }
                             chart.addSeries(seriesTemperature)
+
+                            /**
+                             * Toggle hide and show element
+                             */
+                            $("#soldier-chart").removeClass("d-none")
+                            $("#soldier-chart-none").removeClass("d-flex")
+                            $("#soldier-chart-none").addClass("d-none")
+                        } else {
+                            /**
+                             * Toggle hide and show element
+                             */
+                            $("#soldier-chart").addClass("d-none")
+                            $("#soldier-chart-none").addClass("d-flex")
+                            $("#soldier-chart-none").removeClass("d-none")
                         }
+                    },
+                    error: (jqXHR, textStatus, errorThrown) => {
+                        // Log the error to the console
+                        console.error(
+                            "The following error occurred: "+
+                            textStatus, errorThrown
+                        );
+
+                        Swal.fire({
+                            title: 'Error!',
+                            text: textStatus + ' - ' + errorThrown,
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                        });
                     }
                 })
             }
