@@ -41,7 +41,7 @@
                             <div class="card-header align-items-baseline d-flex justify-content-center">Soldier Position</div>
                             <div id="soldier-map-none" class="card-body custom-min-height align-items-center d-flex justify-content-center"><i>No data available</i></div>
                             <div class="card-body custom-min-height">
-                                <!-- <img src="https://via.placeholder.com/180" alt="" class="card-img-bottom" style="width: 100%; height:250px;"> -->
+                                <div id="mapid"></div>
                             </div>
                         </div>
                     </div>
@@ -149,6 +149,7 @@
                 DASHBOARD.getSoldierData();
                 DASHBOARD.soldierDetail(deviceId);
                 DASHBOARD.soldierChart(deviceId);
+                DASHBOARD.soldierMap(deviceId);
 
                 setTimeout(() => {
                     DASHBOARD.init();
@@ -542,6 +543,22 @@
                         });
                     }
                 })
+            },
+            soldierMap: (id) => {
+                let mymap = L.map('mapid').setView([51.505, -0.09], 13);
+
+                L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoidmFsZGlyaXZhbCIsImEiOiJja3QwYWM4b2MyN2x6Mm9sczl6NHdmZm5iIn0.qaotXqTQnIu7IQCEFnLvWA', {
+                    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                    maxZoom: 18,
+                    id: 'mapbox/streets-v11',
+                    tileSize: 512,
+                    zoomOffset: -1,
+                    accessToken: 'pk.eyJ1IjoidmFsZGlyaXZhbCIsImEiOiJja3QwYWM4b2MyN2x6Mm9sczl6NHdmZm5iIn0.qaotXqTQnIu7IQCEFnLvWA'
+                }).addTo(mymap);
+
+                L.marker([51.5, -0.09]).addTo(mymap)
+                    .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+                    .openPopup();
             }
         }
 

@@ -65,6 +65,14 @@
             position: absolute;
         }
 
+        /* Set the size of the div element that contains the map */
+        #mapid {
+            height: 400px;
+            /* The height is 400 pixels */
+            width: 100%;
+            /* The width is the width of the web page */
+        }
+
         .res-height-1 {
             height: calc((100vh - 31px - 24px - 24px - 24px)/3);
         }
