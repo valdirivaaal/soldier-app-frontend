@@ -53,4 +53,28 @@ class DashboardController extends BaseController
 
         return response()->json($data, 200);
     }
+
+    /**
+     * Endpoint for getting Soldier positions on maps
+     *
+     * @return JsonResponse
+     */
+    public function getSoldierPositions()
+    {
+        $data = $this->fetchFromAPI('/dashboard/map');
+
+        return response()->json($data, 200);
+    }
+
+    /**
+     * Endpoint for getting centermap data
+     *
+     * @return JsonResponse
+     */
+    public function getCenterMap()
+    {
+        $data = $this->fetchFromAPI('/dashboard/centermap');
+
+        return response()->json($data, 200);
+    }
 }

@@ -39,9 +39,9 @@
                     <div class="bs-component">
                         <div class="card border-primary mb-3 mh-25">
                             <div class="card-header align-items-baseline d-flex justify-content-center">Soldier Position</div>
-                            <div id="soldier-map-none" class="card-body custom-min-height align-items-center d-flex justify-content-center"><i>No data available</i></div>
+                            <!-- <div id="soldier-map-none" class="card-body custom-min-height align-items-center d-flex justify-content-center"><i>No data available</i></div> -->
                             <div class="card-body custom-min-height">
-                                <!-- <img src="https://via.placeholder.com/180" alt="" class="card-img-bottom" style="width: 100%; height:250px;"> -->
+                                <div id="mapid"></div>
                             </div>
                         </div>
                     </div>
@@ -139,16 +139,62 @@
 @endsection
 @section('scripts')
     <script src="{{ asset('js/highcharts.js') }}"></script>
-    <script src=""></script>
     <script>
         var DASHBOARD = {};
         var deviceId = null;
+        var ajaxMap = null;
+        var soldierMap = null;
+        var mapToken = "{{ config('app.map_token') }}";
+
+        /**
+         * Initiate map
+         */
+        function initiateMap() {
+            return $.ajax({
+                url: '/dashboard/soldier/center-map',
+                type: 'GET',
+                success: (response) => {
+                    if (response.success) {
+                        console.log('Initialize map')
+                        let lat = response.data[0].latitude
+                        let lon = response.data[0].longitude
+                        let myMap = L.map('mapid').setView([lat, lon], 15);
+                        let mapUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=' + mapToken;
+
+                        L.tileLayer(mapUrl, {
+                            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                            maxZoom: 18,
+                            id: 'mapbox/streets-v11',
+                            tileSize: 512,
+                            zoomOffset: -1,
+                        }).addTo(myMap);
+
+                        window.soldierMap = myMap;
+                    }
+                },
+                error: (jqXHR, textStatus, errorThrown) => {
+                    // Log the error to the console
+                    console.error(
+                        "The following error occurred: "+
+                        textStatus, errorThrown
+                    );
+
+                    Swal.fire({
+                        title: 'Error!',
+                        text: textStatus + ' - ' + errorThrown,
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                    });
+                }
+            })
+        }
 
         DASHBOARD = {
             init: () => {
                 DASHBOARD.getSoldierData();
                 DASHBOARD.soldierDetail(deviceId);
                 DASHBOARD.soldierChart(deviceId);
+                DASHBOARD.soldierMap();
 
                 setTimeout(() => {
                     DASHBOARD.init();
@@ -542,14 +588,82 @@
                         });
                     }
                 })
+            },
+            soldierMap: () => {
+                // $.when(initiateMap()).done((res) => {
+                //     console.log('Done request')
+                // });
+                $.ajax({
+                    url: '/dashboard/soldier/map',
+                    type: 'GET',
+                    success: (response) => {
+                        if (response.success) {
+                            /**
+                             * Disable shadow on marker
+                             */
+                            let icon = new L.Icon.Default();
+                            icon.options.shadowSize = [0,0];
+
+                            /**
+                             * Initiate marker layerGroup
+                             */
+                            let layerGroup = L.layerGroup().addTo(window.soldierMap)
+
+                            /**
+                             * Create markers
+                             */
+                            $.each(response.data, (key, val) => {
+                                let latLong = [
+                                    val.latitude,
+                                    val.longitude
+                                ]
+
+                                L.marker(latLong, {icon: icon}).addTo(layerGroup)
+                                    .bindPopup(val.nama_soldier)
+                                    .openPopup();
+                            });
+
+                            console.log('Initialize marker')
+
+                        } else {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'Maps error !',
+                                icon: 'error',
+                                confirmButtonText: 'Ok'
+                            });
+                        }
+                    },
+                    error: (jqXHR, textStatus, errorThrown) => {
+                        // Log the error to the console
+                        console.error(
+                            "The following error occurred: "+
+                            textStatus, errorThrown
+                        );
+
+                        Swal.fire({
+                            title: 'Error!',
+                            text: textStatus + ' - ' + errorThrown,
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                        });
+                    }
+                })
             }
         }
 
         $(document).ready(function() {
             /**
+             * Run initiate map function
+             */
+            window.soldierMap = initiateMap();
+
+            /**
              * Initialize dashboard functions
              */
-            DASHBOARD.init();
+            setTimeout(() => {
+                DASHBOARD.init();
+            }, 1000)
         });
     </script>
 @endsection
