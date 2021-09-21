@@ -168,7 +168,7 @@
                             zoomOffset: -1,
                         }).addTo(myMap);
 
-                        soldierMap = myMap;
+                        window.soldierMap = myMap;
                     }
                 },
                 error: (jqXHR, textStatus, errorThrown) => {
@@ -603,7 +603,7 @@
                             /**
                              * Initiate marker layerGroup
                              */
-                            let layerGroup = L.layerGroup().addTo(soldierMap)
+                            let layerGroup = L.layerGroup().addTo(window.soldierMap)
 
                             /**
                              * Create markers
@@ -650,7 +650,7 @@
             /**
              * Run initiate map function
              */
-            soldierMap = initiateMap();
+            window.soldierMap = initiateMap();
 
             /**
              * Initialize dashboard functions
