@@ -39,7 +39,7 @@
                     <div class="bs-component">
                         <div class="card border-primary mb-3 mh-25">
                             <div class="card-header align-items-baseline d-flex justify-content-center">Soldier Position</div>
-                            <div id="soldier-map-none" class="card-body custom-min-height align-items-center d-flex justify-content-center"><i>No data available</i></div>
+                            <!-- <div id="soldier-map-none" class="card-body custom-min-height align-items-center d-flex justify-content-center"><i>No data available</i></div> -->
                             <div class="card-body custom-min-height">
                                 <div id="mapid"></div>
                             </div>
@@ -139,17 +139,61 @@
 @endsection
 @section('scripts')
     <script src="{{ asset('js/highcharts.js') }}"></script>
-    <script src=""></script>
     <script>
         var DASHBOARD = {};
         var deviceId = null;
+        var ajaxMap = null;
+        var soldierMap = null;
+        var mapToken = "{{ config('app.map_token') }}";
+
+        /**
+         * Initiate map
+         */
+        function initiateMap() {
+            return $.ajax({
+                url: '/dashboard/soldier/center-map',
+                type: 'GET',
+                success: (response) => {
+                    if (response.success) {
+                        let lat = response.data[0].latitude
+                        let lon = response.data[0].longitude
+                        let myMap = L.map('mapid').setView([lat, lon], 15);
+                        let mapUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=' + mapToken;
+
+                        L.tileLayer(mapUrl, {
+                            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                            maxZoom: 18,
+                            id: 'mapbox/streets-v11',
+                            tileSize: 512,
+                            zoomOffset: -1,
+                        }).addTo(myMap);
+
+                        soldierMap = myMap;
+                    }
+                },
+                error: (jqXHR, textStatus, errorThrown) => {
+                    // Log the error to the console
+                    console.error(
+                        "The following error occurred: "+
+                        textStatus, errorThrown
+                    );
+
+                    Swal.fire({
+                        title: 'Error!',
+                        text: textStatus + ' - ' + errorThrown,
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                    });
+                }
+            })
+        }
 
         DASHBOARD = {
             init: () => {
                 DASHBOARD.getSoldierData();
                 DASHBOARD.soldierDetail(deviceId);
                 DASHBOARD.soldierChart(deviceId);
-                DASHBOARD.soldierMap(deviceId);
+                DASHBOARD.soldierMap();
 
                 setTimeout(() => {
                     DASHBOARD.init();
@@ -544,25 +588,70 @@
                     }
                 })
             },
-            soldierMap: (id) => {
-                let mymap = L.map('mapid').setView([51.505, -0.09], 13);
+            soldierMap: () => {
+                $.ajax({
+                    url: '/dashboard/soldier/map',
+                    type: 'GET',
+                    success: (response) => {
+                        if (response.success) {
+                            /**
+                             * Disable shadow on marker
+                             */
+                            let icon = new L.Icon.Default();
+                            icon.options.shadowSize = [0,0];
 
-                L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoidmFsZGlyaXZhbCIsImEiOiJja3QwYWM4b2MyN2x6Mm9sczl6NHdmZm5iIn0.qaotXqTQnIu7IQCEFnLvWA', {
-                    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-                    maxZoom: 18,
-                    id: 'mapbox/streets-v11',
-                    tileSize: 512,
-                    zoomOffset: -1,
-                    accessToken: 'pk.eyJ1IjoidmFsZGlyaXZhbCIsImEiOiJja3QwYWM4b2MyN2x6Mm9sczl6NHdmZm5iIn0.qaotXqTQnIu7IQCEFnLvWA'
-                }).addTo(mymap);
+                            /**
+                             * Initiate marker layerGroup
+                             */
+                            let layerGroup = L.layerGroup().addTo(soldierMap)
 
-                L.marker([51.5, -0.09]).addTo(mymap)
-                    .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
-                    .openPopup();
+                            /**
+                             * Create markers
+                             */
+                            $.each(response.data, (key, val) => {
+                                let latLong = [
+                                    val.latitude,
+                                    val.longitude
+                                ]
+
+                                L.marker(latLong, {icon: icon}).addTo(layerGroup)
+                                    .bindPopup(val.nama_soldier)
+                                    .openPopup();
+                            });
+
+                        } else {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'Maps error !',
+                                icon: 'error',
+                                confirmButtonText: 'Ok'
+                            });
+                        }
+                    },
+                    error: (jqXHR, textStatus, errorThrown) => {
+                        // Log the error to the console
+                        console.error(
+                            "The following error occurred: "+
+                            textStatus, errorThrown
+                        );
+
+                        Swal.fire({
+                            title: 'Error!',
+                            text: textStatus + ' - ' + errorThrown,
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                        });
+                    }
+                })
             }
         }
 
         $(document).ready(function() {
+            /**
+             * Run initiate map function
+             */
+            soldierMap = initiateMap();
+
             /**
              * Initialize dashboard functions
              */

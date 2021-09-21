@@ -29,4 +29,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/dashboard/soldier', 'DashboardController@getDataSoldier');
     Route::get('/dashboard/soldier/detail/{id}', 'DashboardController@getSoldierDetail');
     Route::get('/dashboard/soldier/chart/{id}', 'DashboardController@getSoldierChart');
+    Route::get('/dashboard/soldier/map', 'DashboardController@getSoldierPositions');
+    Route::get('/dashboard/soldier/center-map', 'DashboardController@getCenterMap');
 });

@@ -56,6 +56,8 @@ return [
 
     'api_url' => env('API_URL', 'http://localhost:6969'),
 
+    'map_token' => env('MAP_TOKEN', null),
+
     'asset_url' => env('ASSET_URL', null),
 
     /*
