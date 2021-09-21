@@ -155,6 +155,7 @@
                 type: 'GET',
                 success: (response) => {
                     if (response.success) {
+                        console.log('Initialize map')
                         let lat = response.data[0].latitude
                         let lon = response.data[0].longitude
                         let myMap = L.map('mapid').setView([lat, lon], 15);
@@ -589,6 +590,9 @@
                 })
             },
             soldierMap: () => {
+                // $.when(initiateMap()).done((res) => {
+                //     console.log('Done request')
+                // });
                 $.ajax({
                     url: '/dashboard/soldier/map',
                     type: 'GET',
@@ -618,6 +622,8 @@
                                     .bindPopup(val.nama_soldier)
                                     .openPopup();
                             });
+
+                            console.log('Initialize marker')
 
                         } else {
                             Swal.fire({
@@ -655,7 +661,9 @@
             /**
              * Initialize dashboard functions
              */
-            DASHBOARD.init();
+            setTimeout(() => {
+                DASHBOARD.init();
+            }, 1000)
         });
     </script>
 @endsection
