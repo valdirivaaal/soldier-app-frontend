@@ -367,63 +367,14 @@
 
                             if (!_.isEmpty(response.data)) {
                                 _.each(response.data, function(value){
-                                    let timeData = new Date(value.y);
+                                    let dateTime = moment(value.y).add(7, 'hours'),
+                                        timestamp = dateTime.valueOf()
 
-                                    pulseData.push([
-                                        Date.UTC(
-                                            timeData.getUTCFullYear(),
-                                            timeData.getUTCMonth(),
-                                            timeData.getUTCDate(),
-                                            timeData.getUTCHours(),
-                                            timeData.getUTCMinutes(),
-                                            timeData.getUTCSeconds()
-                                        ),
-                                        parseInt(value.pulse)
-                                    ]);
-                                    oxygenData.push([
-                                        Date.UTC(
-                                            timeData.getUTCFullYear(),
-                                            timeData.getUTCMonth(),
-                                            timeData.getUTCDate(),
-                                            timeData.getUTCHours(),
-                                            timeData.getUTCMinutes(),
-                                            timeData.getUTCSeconds()
-                                        ),
-                                        parseInt(value.oxygen)
-                                    ]);
-                                    bloodData.push([
-                                        Date.UTC(
-                                            timeData.getUTCFullYear(),
-                                            timeData.getUTCMonth(),
-                                            timeData.getUTCDate(),
-                                            timeData.getUTCHours(),
-                                            timeData.getUTCMinutes(),
-                                            timeData.getUTCSeconds()
-                                        ),
-                                        parseInt(value.bloodPressure)
-                                    ]);
-                                    respirationData.push([
-                                        Date.UTC(
-                                            timeData.getUTCFullYear(),
-                                            timeData.getUTCMonth(),
-                                            timeData.getUTCDate(),
-                                            timeData.getUTCHours(),
-                                            timeData.getUTCMinutes(),
-                                            timeData.getUTCSeconds()
-                                        ),
-                                        parseInt(value.respiration)
-                                    ]);
-                                    temperatureData.push([
-                                        Date.UTC(
-                                            timeData.getUTCFullYear(),
-                                            timeData.getUTCMonth(),
-                                            timeData.getUTCDate(),
-                                            timeData.getUTCHours(),
-                                            timeData.getUTCMinutes(),
-                                            timeData.getUTCSeconds()
-                                        ),
-                                        parseInt(value.temperature)
-                                    ]);
+                                    pulseData.push([timestamp, parseInt(value.pulse)]);
+                                    oxygenData.push([timestamp, parseInt(value.oxygen)]);
+                                    bloodData.push([timestamp, parseInt(value.blood)]);
+                                    respirationData.push([timestamp, parseInt(value.respiration)]);
+                                    temperatureData.push([timestamp, parseInt(value.temperature)]);
                                 });
                             }
 

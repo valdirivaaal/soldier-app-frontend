@@ -11,6 +11,7 @@ try {
     window.$ = window.jQuery = require('jquery');
 
     const Swal = window.Swal = require('sweetalert2');
+    const moment = window.moment = require('moment-timezone');
 
     require('bootstrap');
 } catch (e) {}
