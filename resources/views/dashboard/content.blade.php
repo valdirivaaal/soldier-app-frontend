@@ -372,7 +372,7 @@
 
                                     pulseData.push([timestamp, parseInt(value.pulse)]);
                                     oxygenData.push([timestamp, parseInt(value.oxygen)]);
-                                    bloodData.push([timestamp, parseInt(value.blood)]);
+                                    bloodData.push([timestamp, parseInt(value.bloodPressure)]);
                                     respirationData.push([timestamp, parseInt(value.respiration)]);
                                     temperatureData.push([timestamp, parseInt(value.temperature)]);
                                 });
