@@ -374,7 +374,7 @@
                                     oxygenData.push([timestamp, parseInt(value.oxygen)]);
                                     bloodData.push([timestamp, parseInt(value.bloodPressure)]);
                                     respirationData.push([timestamp, parseInt(value.respiration)]);
-                                    temperatureData.push([timestamp, parseInt(value.temperature)]);
+                                    temperatureData.push([timestamp, parseFloat(value.temperature)]);
                                 });
                             }
 
@@ -415,7 +415,8 @@
                                     }
                                 },
                                 tooltip: {
-                                    pointFormat: '{series.name} : <b>{point.y:,.0f}</b>',
+                                    pointFormat: '{series.name} : <b>{point.y}</b>',
+                                    valueDecimals: 1
                                 },
                                 plotOptions: {
                                     area: {
