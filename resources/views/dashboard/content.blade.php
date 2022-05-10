@@ -145,6 +145,7 @@
         var ajaxMap = null;
         var soldierMap = null;
         var mapToken = "{{ config('app.map_token') }}";
+        var layerGroup = L.layerGroup().clearLayers()
 
         /**
          * Initiate map
@@ -541,9 +542,7 @@
                 })
             },
             soldierMap: () => {
-                // $.when(initiateMap()).done((res) => {
-                //     console.log('Done request')
-                // });
+
                 $.ajax({
                     url: '/dashboard/soldier/map',
                     type: 'GET',
@@ -556,9 +555,14 @@
                             icon.options.shadowSize = [0,0];
 
                             /**
-                             * Initiate marker layerGroup
+                             * Add layergroup to Map instance
                              */
-                            let layerGroup = L.layerGroup().addTo(window.soldierMap)
+                            window.soldierMap.addLayer(layerGroup)
+
+                            /**
+                             * Clear remaining layers if its available
+                             */
+                            layerGroup.clearLayers();
 
                             /**
                              * Create markers
@@ -569,12 +573,17 @@
                                     val.longitude
                                 ]
 
-                                L.marker(latLong, {icon: icon}).addTo(layerGroup)
+                                let manMarker = L.marker(latLong, {icon: icon})
                                     .bindPopup(val.nama_soldier)
                                     .openPopup();
+
+                                /**
+                                 * Add markers as layer in layergroup
+                                 */
+                                layerGroup.addLayer(manMarker)
                             });
 
-                            console.log('Initialize marker')
+                            console.log('Initiate markers')
 
                         } else {
                             Swal.fire({
@@ -600,6 +609,9 @@
                         });
                     }
                 })
+            },
+            soldierReset: () => {
+
             }
         }
 
